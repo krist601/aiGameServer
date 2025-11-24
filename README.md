@@ -1,98 +1,189 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# AI Game Server
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A NestJS backend project following Hexagonal Architecture for an interactive story game with branching decisions, player attributes, achievements, and more.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- **Story Management**: Create and manage story stages with branching narratives
+- **Decision System**: Player choices with attribute effects and requirements
+- **Player Progression**: Save system with attributes, power-ups, and achievements
+- **Inventory System**: Item management for players
+- **Canonical Events**: Unlockable story progression events
+- **Daily Quests**: Time-limited quests with rewards
+- **Friend Challenges**: Social gameplay features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tech Stack
 
-## Project setup
+- **Framework**: NestJS 11
+- **Database**: MongoDB 7.0
+- **Architecture**: Hexagonal Architecture (Ports & Adapters)
+- **Testing**: Jest with in-memory MongoDB
 
-```bash
-$ npm install
-```
+## Prerequisites
 
-## Compile and run the project
+- Node.js 18+ 
+- Docker Desktop (for MongoDB) - [Installation Guide](./INSTALL_DOCKER.md)
+- npm or yarn
+
+## Quick Start
+
+### 1. Install Dependencies
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+### 2. Install Docker (if not already installed)
+
+**First time?** See [INSTALL_DOCKER.md](./INSTALL_DOCKER.md) for detailed instructions.
+
+Quick check: Run `docker --version` to verify Docker is installed.
+
+### 3. Set Up MongoDB with Docker
 
 ```bash
-# unit tests
-$ npm run test
+# Start MongoDB container (use 'docker compose' for newer versions, 'docker-compose' for older)
+docker compose up -d
+# or
+docker-compose up -d
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Verify it's running
+docker ps
 ```
 
-## Deployment
+### 3. Configure Environment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Create a `.env` file in the project root:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```env
+MONGO_URI=mongodb://admin:password@localhost:27017/ai-game?authSource=admin
+PORT=3000
+```
+
+### 4. Run the Application
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Development mode
+npm run start:dev
+
+# Production mode
+npm run build
+npm run start:prod
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The API will be available at `http://localhost:3000`
 
-## Resources
+## API Endpoints
 
-Check out a few resources that may come in handy when working with NestJS:
+### Story Stages
+- `POST /story-stage` - Create a story stage
+- `GET /story-stage/:id` - Get story stage by ID
+- `PUT /story-stage/:id` - Update story stage
+- `GET /story-stage/chapter/:chapter` - Get stages by chapter
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Decisions
+- `POST /decision` - Create a decision
+- `POST /decision-option` - Create a decision option
+- `POST /decision-option/resolve/:id` - Resolve a decision option
 
-## Support
+### Player Save
+- `GET /player-save/:id` - Get player save
+- `PUT /player-save/:id` - Update player save
+- `POST /player-save/:id/reset` - Reset player save
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Inventory
+- `POST /player/:id/inventory/add` - Add item to inventory
+- `POST /player/:id/inventory/remove` - Remove item from inventory
+- `POST /player/:id/inventory/use` - Use an item
 
-## Stay in touch
+### Canonical Events
+- `POST /canonical-event` - Create canonical event
+- `POST /canonical-event/trigger/:id` - Trigger canonical event
+- `GET /canonical-event/progress/:playerId` - Get canonical progress
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Daily Quests
+- `GET /daily-quest/refresh` - Refresh daily quests
+- `POST /daily-quest/:id/complete` - Mark quest as completed
+- `POST /daily-quest/:id/claim` - Claim quest reward
+
+### Friend Challenges
+- `POST /challenge` - Create challenge
+- `POST /challenge/:id/accept` - Accept challenge
+- `POST /challenge/:id/resolve` - Resolve challenge
+
+## Project Structure
+
+```
+src/
+├── domain/              # Domain entities (business logic)
+├── application/         # Use cases and ports (application logic)
+│   ├── ports/          # Repository interfaces
+│   └── use-cases/      # Business use cases
+└── infrastructure/      # External adapters
+    ├── controllers/    # REST API endpoints
+    ├── repositories/   # MongoDB implementations
+    └── schemas/        # Mongoose schemas
+```
+
+## Testing
+
+```bash
+# Unit tests
+npm test
+
+# Watch mode
+npm run test:watch
+
+# Coverage
+npm run test:cov
+
+# E2E tests
+npm run test:e2e
+```
+
+## Docker Commands
+
+```bash
+# Start MongoDB
+docker-compose up -d
+
+# Stop MongoDB
+docker-compose stop
+
+# View logs
+docker logs ai-game-mongodb
+
+# Remove container (keeps data)
+docker-compose down
+
+# Remove everything including data
+docker-compose down -v
+```
+
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `MONGO_URI` | MongoDB connection string | `mongodb://localhost:27017/ai-game` |
+| `PORT` | Server port | `3000` |
+
+## Development
+
+```bash
+# Format code
+npm run format
+
+# Lint code
+npm run lint
+
+# Build
+npm run build
+```
+
+## Documentation
+
+For detailed MongoDB setup instructions, see [DOCKER_SETUP.md](./DOCKER_SETUP.md)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+UNLICENSED

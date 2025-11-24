@@ -3,7 +3,7 @@ import { GetStoryBranchUseCase } from './get-story-branch.use-case';
 import { Branch } from '../../../domain/story/branch.entity';
 
 describe('GetStoryBranchUseCase', () => {
-  it('returns the branch provided by the port', () => {
+  it('returns the branch provided by the port', async () => {
     const branch: Branch = {
       title: 'Title',
       sub_title: 'Subtitle',
@@ -15,12 +15,12 @@ describe('GetStoryBranchUseCase', () => {
     };
 
     const mockPort: StoryBranchPort = {
-      getRootBranch: jest.fn().mockReturnValue(branch),
+      getRootBranch: jest.fn().mockResolvedValue(branch),
     };
 
     const useCase = new GetStoryBranchUseCase(mockPort);
 
-    expect(useCase.execute()).toBe(branch);
+    await expect(useCase.execute()).resolves.toEqual(branch);
     expect(mockPort.getRootBranch).toHaveBeenCalledTimes(1);
   });
 });

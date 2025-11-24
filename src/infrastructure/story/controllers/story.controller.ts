@@ -7,7 +7,7 @@ export class StoryController {
   constructor(private readonly getStoryBranchUseCase: GetStoryBranchUseCase) {}
 
   @Get()
-  getStory(): Branch {
+  getStory(): Promise<Branch> {
     return this.getStoryBranchUseCase.execute();
   }
 }

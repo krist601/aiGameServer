@@ -12,7 +12,7 @@ export class GetStoryBranchUseCase {
     private readonly storyBranchPort: StoryBranchPort,
   ) {}
 
-  execute(): Branch {
+  execute(): Promise<Branch> {
     return this.storyBranchPort.getRootBranch();
   }
 }
