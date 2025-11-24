@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Branch } from '../../../domain/story/branch.entity';
+import type { Branch } from '../../../domain/story/branch.entity';
 import {
-  StoryBranchPort,
   STORY_BRANCH_PORT,
+  type StoryBranchPort,
 } from '../ports/story-branch.port';
 
 @Injectable()
