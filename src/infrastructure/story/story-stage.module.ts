@@ -5,6 +5,7 @@ import { CreateStoryStageUseCase } from '../../application/story/use-cases/creat
 import { UpdateStoryStageUseCase } from '../../application/story/use-cases/update-story-stage.use-case';
 import { GetStoryStageByIdUseCase } from '../../application/story/use-cases/get-story-stage-by-id.use-case';
 import { GetStoryStagesByChapterUseCase } from '../../application/story/use-cases/get-story-stages-by-chapter.use-case';
+import { GetStoryStagesByChapterIdUseCase } from '../../application/story/use-cases/get-story-stages-by-chapter-id.use-case';
 import {
   STORY_STAGE_PORT,
   type StoryStagePort,
@@ -29,6 +30,7 @@ const mongoUri = process.env.MONGO_URI;
     UpdateStoryStageUseCase,
     GetStoryStageByIdUseCase,
     GetStoryStagesByChapterUseCase,
+    GetStoryStagesByChapterIdUseCase,
     StoryStageMongoRepository,
     {
       provide: STORY_STAGE_PORT,

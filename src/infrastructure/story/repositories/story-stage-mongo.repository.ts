@@ -42,6 +42,14 @@ export class StoryStageMongoRepository implements StoryStagePort {
     return this.stageModel.find({ chapter }).lean<StoryStage[]>().exec();
   }
 
+  async findByChapterId(chapterId: string): Promise<StoryStage[]> {
+    return this.stageModel
+      .find({ chapter_id: chapterId })
+      .sort({ stage_order: 1 })
+      .lean<StoryStage[]>()
+      .exec();
+  }
+
   async findAll(): Promise<StoryStage[]> {
     return this.stageModel.find().lean<StoryStage[]>().exec();
   }

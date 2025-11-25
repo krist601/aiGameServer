@@ -5,6 +5,7 @@ export interface StoryStagePort {
   update(id: string, stage: Partial<StoryStage>): Promise<StoryStage>;
   findById(id: string): Promise<StoryStage | null>;
   findByChapter(chapter: string): Promise<StoryStage[]>;
+  findByChapterId(chapterId: string): Promise<StoryStage[]>;
   findAll(): Promise<StoryStage[]>;
 }
 

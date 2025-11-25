@@ -4,6 +4,9 @@ import type { StoryStage } from '../../../domain/story/story-stage.entity';
 
 @Schema({ collection: 'story_stages', timestamps: true })
 export class StoryStageDocument implements StoryStage {
+  @Prop({ required: true, index: true })
+  chapter_id!: string;
+
   @Prop({ required: true })
   name!: string;
 
@@ -25,19 +28,20 @@ export class StoryStageDocument implements StoryStage {
   @Prop({ required: true })
   question!: string;
 
+  @Prop({ required: true, default: 0 })
+  stage_order!: number;
+
   @Prop({ default: false })
   is_canonical_progress!: boolean;
 
   @Prop()
   canonical_event?: string;
-
-  @Prop()
-  chapter?: string;
 }
 
 export type StoryStageHydratedDocument = HydratedDocument<StoryStageDocument>;
 export const StoryStageSchema = SchemaFactory.createForClass(StoryStageDocument);
 
-StoryStageSchema.index({ chapter: 1 });
+StoryStageSchema.index({ chapter_id: 1 });
+StoryStageSchema.index({ chapter_id: 1, stage_order: 1 });
 StoryStageSchema.index({ is_canonical_progress: 1 });
 

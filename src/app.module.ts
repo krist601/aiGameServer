@@ -15,6 +15,9 @@ import { InventoryModule } from './infrastructure/inventory/inventory.module';
 import { DailyQuestModule } from './infrastructure/daily-quest/daily-quest.module';
 import { FriendChallengeModule } from './infrastructure/friend-challenge/friend-challenge.module';
 import { PlayerModule } from './infrastructure/player/player.module';
+import { FranchiseModule } from './infrastructure/franchise/franchise.module';
+import { BookModule } from './infrastructure/book/book.module';
+import { ChapterModule } from './infrastructure/chapter/chapter.module';
 
 @Module({
   imports: [
@@ -31,6 +34,9 @@ import { PlayerModule } from './infrastructure/player/player.module';
       }),
       inject: [ConfigService],
     }),
+    FranchiseModule,
+    BookModule,
+    ChapterModule,
     StoryModule,
     StoryStageModule,
     DecisionModule,

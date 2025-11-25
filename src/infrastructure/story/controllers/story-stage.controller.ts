@@ -4,6 +4,7 @@ import { CreateStoryStageUseCase } from '../../../application/story/use-cases/cr
 import { UpdateStoryStageUseCase } from '../../../application/story/use-cases/update-story-stage.use-case';
 import { GetStoryStageByIdUseCase } from '../../../application/story/use-cases/get-story-stage-by-id.use-case';
 import { GetStoryStagesByChapterUseCase } from '../../../application/story/use-cases/get-story-stages-by-chapter.use-case';
+import { GetStoryStagesByChapterIdUseCase } from '../../../application/story/use-cases/get-story-stages-by-chapter-id.use-case';
 
 @Controller('story-stage')
 export class StoryStageController {
@@ -12,6 +13,7 @@ export class StoryStageController {
     private readonly updateStoryStageUseCase: UpdateStoryStageUseCase,
     private readonly getStoryStageByIdUseCase: GetStoryStageByIdUseCase,
     private readonly getStoryStagesByChapterUseCase: GetStoryStagesByChapterUseCase,
+    private readonly getStoryStagesByChapterIdUseCase: GetStoryStagesByChapterIdUseCase,
   ) {}
 
   @Post()
@@ -35,6 +37,11 @@ export class StoryStageController {
   @Get('chapter/:chapter')
   async findByChapter(@Param('chapter') chapter: string): Promise<StoryStage[]> {
     return this.getStoryStagesByChapterUseCase.execute(chapter);
+  }
+
+  @Get('chapter-id/:chapterId')
+  async findByChapterId(@Param('chapterId') chapterId: string): Promise<StoryStage[]> {
+    return this.getStoryStagesByChapterIdUseCase.execute(chapterId);
   }
 }
 

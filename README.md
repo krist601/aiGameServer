@@ -2,8 +2,21 @@
 
 A NestJS backend project following Hexagonal Architecture for an interactive story game with branching decisions, player attributes, achievements, and more.
 
+## 🎯 Content Hierarchy
+
+```
+Franchise (Harry Potter, Star Wars, etc.)
+  └── Book/Volume (La Piedra Filosofal, etc.)
+      └── Chapter (Capítulo 1, 2, 3...)
+          └── Story Stage (Escenas individuales)
+              └── Decisions & Branches
+```
+
+See [CONTENT_HIERARCHY.md](./CONTENT_HIERARCHY.md) for detailed documentation.
+
 ## Features
 
+- **Content Organization**: Franchise → Book → Chapter → Story Stage hierarchy
 - **Story Management**: Create and manage story stages with branching narratives
 - **Decision System**: Player choices with attribute effects and requirements
 - **Player Progression**: Save system with attributes, power-ups, and achievements
@@ -74,6 +87,15 @@ npm run start:prod
 The API will be available at `http://localhost:3000`
 
 ## API Endpoints
+
+### Content Hierarchy
+- `POST /franchise` - Create a franchise
+- `GET /franchise` - Get all franchises
+- `GET /franchise/:id` - Get franchise by ID
+- `POST /book` - Create a book
+- `GET /book/franchise/:franchiseId` - Get books by franchise
+- `POST /chapter` - Create a chapter
+- `GET /chapter/book/:bookId` - Get chapters by book
 
 ### Story Stages
 - `POST /story-stage` - Create a story stage
@@ -182,7 +204,18 @@ npm run build
 
 ## Documentation
 
-For detailed MongoDB setup instructions, see [DOCKER_SETUP.md](./DOCKER_SETUP.md)
+### Setup Guides
+- [DOCKER_SETUP.md](./DOCKER_SETUP.md) - Detailed MongoDB setup instructions
+- [INSTALL_DOCKER.md](./INSTALL_DOCKER.md) - Docker installation guide
+
+### Content System
+- [CONTENT_HIERARCHY.md](./CONTENT_HIERARCHY.md) - Complete guide to the Franchise → Book → Chapter → Story Stage system
+- [QUICK_START.md](./QUICK_START.md) - Quick examples for creating content
+- [IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md) - Technical implementation details
+- [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md) - Script for migrating existing StoryStages
+
+### API Testing
+- [extra/AI_Game_API.postman_collection.json](./extra/AI_Game_API.postman_collection.json) - Postman collection with all API endpoints
 
 ## License
 
