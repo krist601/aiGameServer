@@ -1,0 +1,1003 @@
+{
+	"info": {
+		"_postman_id": "ai-game-api-collection",
+		"name": "AI Game API Collection",
+		"description": "Colección completa de endpoints para el servidor de juego AI Game con arquitectura hexagonal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "ai-game-server"
+	},
+	"item": [
+		{
+			"name": "Franchises",
+			"item": [
+				{
+					"name": "Create Franchise",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"franchise_id\": \"harry_potter\",\n  \"name\": \"Harry Potter\",\n  \"description\": \"La saga mágica de Harry Potter en Hogwarts\",\n  \"author\": \"J.K. Rowling\",\n  \"genre\": [\"Fantasy\", \"Adventure\", \"Magic\"],\n  \"cover_image\": \"https://example.com/hp-cover.jpg\",\n  \"is_active\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/franchise",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"franchise"
+							]
+						},
+						"description": "Crea una nueva franquicia (ej: Harry Potter, Star Wars, etc.)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Franchises",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/franchise",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"franchise"
+							]
+						},
+						"description": "Obtiene todas las franquicias disponibles"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Franchise by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/franchise/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"franchise",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "harry_potter",
+									"description": "ID de la franquicia"
+								}
+							]
+						},
+						"description": "Obtiene una franquicia por su ID"
+					},
+					"response": []
+				}
+			],
+			"description": "Gestión de franquicias (Harry Potter, Star Wars, etc.)"
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Create Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"book_id\": \"hp_philosophers_stone\",\n  \"franchise_id\": \"harry_potter\",\n  \"title\": \"Harry Potter y la Piedra Filosofal\",\n  \"description\": \"El primer año de Harry en Hogwarts\",\n  \"volume_number\": 1,\n  \"cover_image\": \"https://example.com/hp1-cover.jpg\",\n  \"is_published\": true,\n  \"estimated_duration\": 480\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/book",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"book"
+							]
+						},
+						"description": "Crea un nuevo libro/volumen dentro de una franquicia"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Books by Franchise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/book/franchise/:franchiseId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"book",
+								"franchise",
+								":franchiseId"
+							],
+							"variable": [
+								{
+									"key": "franchiseId",
+									"value": "harry_potter",
+									"description": "ID de la franquicia"
+								}
+							]
+						},
+						"description": "Obtiene todos los libros de una franquicia"
+					},
+					"response": []
+				}
+			],
+			"description": "Gestión de libros/volúmenes dentro de cada franquicia"
+		},
+		{
+			"name": "Chapters",
+			"item": [
+				{
+					"name": "Create Chapter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"chapter_id\": \"hp1_ch1\",\n  \"book_id\": \"hp_philosophers_stone\",\n  \"title\": \"El Niño que Sobrevivió\",\n  \"description\": \"La llegada de Harry a Privet Drive\",\n  \"chapter_number\": 1,\n  \"is_unlocked_by_default\": true,\n  \"unlock_requirements\": {}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/chapter",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chapter"
+							]
+						},
+						"description": "Crea un nuevo capítulo dentro de un libro"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Chapters by Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/chapter/book/:bookId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chapter",
+								"book",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "hp_philosophers_stone",
+									"description": "ID del libro"
+								}
+							]
+						},
+						"description": "Obtiene todos los capítulos de un libro"
+					},
+					"response": []
+				}
+			],
+			"description": "Gestión de capítulos dentro de cada libro"
+		},
+		{
+			"name": "Story Stages",
+			"item": [
+				{
+					"name": "Create Story Stage",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"stage_id\": \"stage_1\",\n  \"title\": \"El Inicio del Viaje\",\n  \"description\": \"Te encuentras en una encrucijada...\",\n  \"content\": \"El camino se bifurca ante ti. A la izquierda, un bosque oscuro. A la derecha, un río brillante.\",\n  \"chapter\": \"1\",\n  \"branches\": [\n    {\n      \"branch_id\": \"branch_1\",\n      \"description\": \"Ir al bosque\",\n      \"next_stage_id\": \"stage_2\"\n    },\n    {\n      \"branch_id\": \"branch_2\",\n      \"description\": \"Seguir el río\",\n      \"next_stage_id\": \"stage_3\"\n    }\n  ],\n  \"decisions\": []\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/story-stage",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"story-stage"
+							]
+						},
+						"description": "Crea una nueva etapa de historia con sus ramas y decisiones"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Story Stage by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/story-stage/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"story-stage",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "stage_1",
+									"description": "ID de la etapa de historia"
+								}
+							]
+						},
+						"description": "Obtiene una etapa de historia por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Story Stage",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"El Inicio del Viaje (Actualizado)\",\n  \"description\": \"Te encuentras en una encrucijada decisiva...\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/story-stage/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"story-stage",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "stage_1"
+								}
+							]
+						},
+						"description": "Actualiza una etapa de historia existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Story Stages by Chapter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/story-stage/chapter/:chapter",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"story-stage",
+								"chapter",
+								":chapter"
+							],
+							"variable": [
+								{
+									"key": "chapter",
+									"value": "1",
+									"description": "Número del capítulo"
+								}
+							]
+						},
+						"description": "Obtiene todas las etapas de un capítulo específico (legacy)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Story Stages by Chapter ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/story-stage/chapter-id/:chapterId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"story-stage",
+								"chapter-id",
+								":chapterId"
+							],
+							"variable": [
+								{
+									"key": "chapterId",
+									"value": "hp1_ch1",
+									"description": "ID del capítulo"
+								}
+							]
+						},
+						"description": "Obtiene todas las etapas de un capítulo por su ID (ordenadas por stage_order)"
+					},
+					"response": []
+				}
+			],
+			"description": "Gestión de etapas de historia con sistema de capítulos y progresión"
+		},
+		{
+			"name": "Decisions",
+			"item": [
+				{
+					"name": "Create Decision",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"decision_id\": \"decision_1\",\n  \"question\": \"¿Qué camino elegirás?\",\n  \"options\": []\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/decision",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"decision"
+							]
+						},
+						"description": "Crea una nueva decisión en el juego"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Decision Option",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"option_id\": \"option_1\",\n  \"decision_id\": \"decision_1\",\n  \"text\": \"Ser valiente y confrontar\",\n  \"attribute_effects\": [\n    {\n      \"attribute_id\": \"courage\",\n      \"value\": 10\n    }\n  ],\n  \"attribute_requirements\": [\n    {\n      \"attribute_id\": \"courage\",\n      \"required_value\": 5\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/decision-option",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"decision-option"
+							]
+						},
+						"description": "Crea una opción de decisión con efectos y requisitos de atributos"
+					},
+					"response": []
+				},
+				{
+					"name": "Resolve Decision Option",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"player_id\": \"player_123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/decision-option/resolve/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"decision-option",
+								"resolve",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "option_1",
+									"description": "ID de la opción seleccionada"
+								}
+							]
+						},
+						"description": "Resuelve una opción de decisión y aplica sus efectos al jugador"
+					},
+					"response": []
+				}
+			],
+			"description": "Sistema de decisiones con opciones múltiples y efectos de atributos"
+		},
+		{
+			"name": "Player Save",
+			"item": [
+				{
+					"name": "Get Player Save",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/player-save/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"player-save",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "player_123",
+									"description": "ID del jugador"
+								}
+							]
+						},
+						"description": "Obtiene el guardado de un jugador"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Player Save",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"current_stage_id\": \"stage_2\",\n  \"attributes\": {\n    \"courage\": 15,\n    \"intelligence\": 20,\n    \"strength\": 10\n  },\n  \"decisions_made\": [\"decision_1\"],\n  \"unlocked_canonical_events\": [\"event_1\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/player-save/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"player-save",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "player_123"
+								}
+							]
+						},
+						"description": "Actualiza el guardado de un jugador"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Player Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/player-save/:id/reset",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"player-save",
+								":id",
+								"reset"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "player_123"
+								}
+							]
+						},
+						"description": "Resetea el guardado de un jugador al estado inicial"
+					},
+					"response": []
+				}
+			],
+			"description": "Sistema de guardado de jugadores con atributos y progresión"
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "Add Item to Inventory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"item_id\": \"potion_health\",\n  \"quantity\": 3\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/player/:id/inventory/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"player",
+								":id",
+								"inventory",
+								"add"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "player_123",
+									"description": "ID del jugador"
+								}
+							]
+						},
+						"description": "Añade un item al inventario del jugador"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Item from Inventory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"item_id\": \"potion_health\",\n  \"quantity\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/player/:id/inventory/remove",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"player",
+								":id",
+								"inventory",
+								"remove"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "player_123"
+								}
+							]
+						},
+						"description": "Remueve un item del inventario del jugador"
+					},
+					"response": []
+				},
+				{
+					"name": "Use Item",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"item_id\": \"potion_health\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/player/:id/inventory/use",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"player",
+								":id",
+								"inventory",
+								"use"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "player_123"
+								}
+							]
+						},
+						"description": "Usa un item del inventario y aplica sus efectos"
+					},
+					"response": []
+				}
+			],
+			"description": "Sistema de inventario para gestionar items del jugador"
+		},
+		{
+			"name": "Canonical Events",
+			"item": [
+				{
+					"name": "Create Canonical Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"event_id\": \"event_first_boss\",\n  \"name\": \"Primer Jefe Derrotado\",\n  \"description\": \"Has vencido al primer jefe del juego\",\n  \"unlock_requirements\": {\n    \"decisions\": [\"decision_1\", \"decision_2\"],\n    \"attributes\": {\n      \"strength\": 20,\n      \"courage\": 15\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/canonical-event",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"canonical-event"
+							]
+						},
+						"description": "Crea un nuevo evento canónico con requisitos de desbloqueo"
+					},
+					"response": []
+				},
+				{
+					"name": "Trigger Canonical Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"player_id\": \"player_123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/canonical-event/trigger/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"canonical-event",
+								"trigger",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "event_first_boss",
+									"description": "ID del evento canónico"
+								}
+							]
+						},
+						"description": "Dispara un evento canónico para un jugador"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Canonical Progress",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/canonical-event/progress/:playerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"canonical-event",
+								"progress",
+								":playerId"
+							],
+							"variable": [
+								{
+									"key": "playerId",
+									"value": "player_123",
+									"description": "ID del jugador"
+								}
+							]
+						},
+						"description": "Obtiene el progreso de eventos canónicos de un jugador"
+					},
+					"response": []
+				}
+			],
+			"description": "Eventos canónicos que desbloquean progreso en la historia"
+		},
+		{
+			"name": "Attributes",
+			"item": [
+				{
+					"name": "Create Attribute",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"attribute_id\": \"courage\",\n  \"name\": \"Valentía\",\n  \"description\": \"Mide tu valor ante situaciones peligrosas\",\n  \"initial_value\": 0,\n  \"max_value\": 100\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/attribute",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"attribute"
+							]
+						},
+						"description": "Crea un nuevo atributo para el sistema de juego"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Attribute Effect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"effect_id\": \"effect_courage_boost\",\n  \"decision_option_id\": \"option_1\",\n  \"attribute_id\": \"courage\",\n  \"value\": 15\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/attribute-effect",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"attribute-effect"
+							]
+						},
+						"description": "Vincula un efecto de atributo a una opción de decisión"
+					},
+					"response": []
+				}
+			],
+			"description": "Sistema de atributos del jugador (fuerza, inteligencia, valentía, etc.)"
+		},
+		{
+			"name": "Daily Quests",
+			"item": [
+				{
+					"name": "Refresh Daily Quests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/daily-quest/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"daily-quest",
+								"refresh"
+							]
+						},
+						"description": "Refresca las misiones diarias disponibles"
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Daily Quest",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/daily-quest/:id/complete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"daily-quest",
+								":id",
+								"complete"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "quest_daily_1",
+									"description": "ID de la misión diaria"
+								}
+							]
+						},
+						"description": "Marca una misión diaria como completada"
+					},
+					"response": []
+				},
+				{
+					"name": "Claim Quest Reward",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"player_id\": \"player_123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/daily-quest/:id/claim",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"daily-quest",
+								":id",
+								"claim"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "quest_daily_1"
+								}
+							]
+						},
+						"description": "Reclama la recompensa de una misión diaria completada"
+					},
+					"response": []
+				}
+			],
+			"description": "Sistema de misiones diarias con recompensas temporales"
+		},
+		{
+			"name": "Friend Challenges",
+			"item": [
+				{
+					"name": "Create Challenge",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"challenge_id\": \"challenge_1\",\n  \"challenger_id\": \"player_123\",\n  \"challenged_id\": \"player_456\",\n  \"description\": \"¿Quién puede completar la etapa más rápido?\",\n  \"objective\": \"complete_stage_5\",\n  \"status\": \"pending\",\n  \"reward\": {\n    \"type\": \"item\",\n    \"value\": \"legendary_sword\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/challenge",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"challenge"
+							]
+						},
+						"description": "Crea un desafío entre dos jugadores"
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Challenge",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/challenge/:id/accept",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"challenge",
+								":id",
+								"accept"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "challenge_1",
+									"description": "ID del desafío"
+								}
+							]
+						},
+						"description": "Acepta un desafío pendiente"
+					},
+					"response": []
+				},
+				{
+					"name": "Resolve Challenge",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"success\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/challenge/:id/resolve",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"challenge",
+								":id",
+								"resolve"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "challenge_1"
+								}
+							]
+						},
+						"description": "Resuelve un desafío marcando si fue exitoso o no"
+					},
+					"response": []
+				}
+			],
+			"description": "Sistema de desafíos entre amigos para gameplay social"
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

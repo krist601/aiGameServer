@@ -1,0 +1,269 @@
+# AI Game Server - Contexto del Proyecto
+
+## Descripción General
+E#### 5. **Decisio#### 7. **Invent#### 9. **Ac#### 11. **Daily Quests**
+- Misiones diarias con recompensas
+- Sistema temporal de quests
+- Entidad: `DailyQuest`
+
+#### 12. **Power-Ups**ent System**
+- Sistema de logros desbloqueables
+- Entidad: `Achievement`
+
+#### 10. **Canonical Events**ystem**
+- Gestión de inventario de jugadores
+- Sistema de items con efectos
+- Entidades: `Inventory`, `Item`
+
+#### 8. **Attribute System**em**
+- Sistema de decisiones con opciones múltiples
+- Efectos de atributos por decisión
+- Requisitos de atributos para desbloquear opciones
+- Entidades: `Decision`, `DecisionOption`, `OptionAttributeEffect`, `AttributeRequirement`
+
+#### 6. **Player Management**un servidor backend para un juego interactivo de historias con decisiones ramificadas, desarrollado con NestJS y MongoDB. El proyecto sigue una arquitectura hexagonal (Ports & Adapters) con clara separación entre dominio, aplicación e infraestructura.
+
+## Stack Tecnológico
+- **Framework**: NestJS 11
+- **Lenguaje**: TypeScript
+- **Base de Datos**: MongoDB 7.0 con Mongoose
+- **Arquitectura**: Hexagonal Architecture (Ports & Adapters)
+- **Testing**: Jest con mongodb-memory-server
+- **Containerización**: Docker & Docker Compose
+
+## Estructura del Proyecto
+
+### Arquitectura Hexagonal
+```
+src/
+├── domain/           # Entidades del dominio (lógica de negocio pura)
+├── application/      # Casos de uso y puertos (interfaces)
+│   ├── ports/       # Interfaces de repositorios y servicios
+│   └── use-cases/   # Lógica de aplicación
+└── infrastructure/  # Adaptadores (DB, HTTP, etc.)
+    ├── controllers/ # Controladores REST
+    ├── repositories/ # Implementación de repositorios
+    ├── schemas/     # Esquemas de MongoDB
+    └── *.module.ts  # Módulos de NestJS
+```
+
+### Módulos Principales
+
+#### 1. **Franchise (Franquicia)**
+- Sistema de franquicias de historias
+- Ej: "Harry Potter", "Star Wars", "Mi Historia Original"
+- Entidad: `Franchise`
+- Atributos: name, description, author, genre, cover_image
+
+#### 2. **Book/Volume (Libro/Volumen)**
+- Libros o volúmenes dentro de una franquicia
+- Ej: "La Piedra Filosofal", "La Cámara Secreta"
+- Entidad: `Book`
+- Relación: Pertenece a una `Franchise`
+
+#### 3. **Chapter (Capítulo)**
+- Capítulos dentro de un libro
+- Sistema de desbloqueo progresivo
+- Entidad: `Chapter`
+- Relación: Pertenece a un `Book`
+- Requisitos de desbloqueo opcionales
+
+#### 4. **Story & Story Stages**
+- Gestión de narrativas y etapas de historia
+- Sistema de escenas dentro de capítulos
+- Entidades: `StoryStage`, `Branch`
+- Relación: Pertenece a un `Chapter`
+- Orden secuencial dentro del capítulo
+
+## Jerarquía de Contenido
+```
+Franchise (Harry Potter)
+  └── Book (La Piedra Filosofal)
+      └── Chapter (Capítulo 1: El Niño que Sobrevivió)
+          └── StoryStage (Escena 1, Escena 2, etc.)
+              └── Decisions & Branches
+```
+
+#### 5. **Decision System**
+- Sistema de decisiones con opciones múltiples
+- Efectos de atributos por decisión
+- Requisitos de atributos para desbloquear opciones
+- Entidades: `Decision`, `DecisionOption`, `OptionAttributeEffect`, `AttributeRequirement`
+
+#### 6. **Player Management**
+- Sistema de guardado de jugadores (`PlayerSave`)
+- Atributos del jugador
+- Progresión y estadísticas
+
+#### 7. **Inventory System**
+- Gestión de inventario de jugadores
+- Sistema de items con efectos
+- Entidades: `Inventory`, `Item`
+
+#### 8. **Attribute System**
+- Atributos del jugador (fuerza, inteligencia, etc.)
+- Requisitos de atributos para decisiones
+- Efectos de atributos en opciones
+- Entidad: `Attribute`
+
+#### 9. **Achievement System**
+- Sistema de logros desbloqueables
+- Entidad: `Achievement`
+
+#### 10. **Canonical Events**
+- Eventos canónicos que desbloquean progreso
+- Entidad: `CanonicalEvent`
+
+#### 11. **Daily Quests**
+- Misiones diarias con recompensas
+- Sistema temporal de quests
+- Entidad: `DailyQuest`
+
+#### 12. **Power-Ups**
+- Power-ups consumibles o permanentes
+- Entidad: `PowerUp`
+
+#### 13. **Friend Challenges**
+- Sistema de desafíos entre jugadores
+- Entidad: `FriendChallenge`
+
+## Patrones y Convenciones
+
+### Nomenclatura de Archivos
+- Entidades: `*.entity.ts` (en domain/)
+- Casos de uso: `*.use-case.ts` (en application/use-cases/)
+- Puertos: `*.repository.ts` o `*.port.ts` (en application/ports/)
+- Repositorios: `*.repository.ts` (en infrastructure/repositories/)
+- Esquemas: `*.schema.ts` (en infrastructure/schemas/)
+- Controladores: `*.controller.ts` (en infrastructure/controllers/)
+- Módulos: `*.module.ts` (en infrastructure/)
+
+### Arquitectura Hexagonal
+1. **Domain Layer**: Entidades de negocio sin dependencias externas
+2. **Application Layer**: Casos de uso y definición de puertos (interfaces)
+3. **Infrastructure Layer**: Implementación de adaptadores (DB, HTTP, etc.)
+
+### Dependency Injection
+- Usar decoradores de NestJS: `@Injectable()`, `@Controller()`, `@Module()`
+- Inyección por constructor
+- Providers registrados en módulos correspondientes
+
+### Base de Datos
+- MongoDB con Mongoose
+- Schemas definidos usando `@Schema()` decorator
+- Conexión configurada en `app.module.ts`
+- Variables de entorno: `MONGO_URI`, `PORT`
+
+## Scripts Disponibles
+```bash
+npm run start:dev      # Desarrollo con hot reload
+npm run build          # Compilar proyecto
+npm run start:prod     # Producción
+npm run test           # Tests unitarios
+npm run test:e2e       # Tests end-to-end
+npm run lint           # ESLint
+npm run format         # Prettier
+```
+
+## Variables de Entorno (.env)
+```
+MONGO_URI=mongodb://admin:password@localhost:27017/ai-game?authSource=admin
+PORT=3000
+```
+
+## Docker Setup
+- MongoDB 7.0 corriendo en puerto 27017
+- Credenciales: admin/password
+- Ver `docker-compose.yml` y `DOCKER_SETUP.md`
+
+## Testing
+- Tests unitarios con Jest
+- Tests E2E con `mongodb-memory-server`
+- Helpers de testing en `test/helpers/`
+
+## Reglas de Desarrollo
+
+### Al Crear Nuevas Features
+1. Definir entidad en `domain/`
+2. Crear interfaces de puertos en `application/ports/`
+3. Implementar casos de uso en `application/use-cases/`
+4. Crear schema de Mongoose en `infrastructure/schemas/`
+5. Implementar repositorio en `infrastructure/repositories/`
+6. Crear controlador en `infrastructure/controllers/`
+7. Configurar módulo en `infrastructure/*.module.ts`
+8. Registrar módulo en `app.module.ts`
+
+### Estilo de Código
+- TypeScript estricto
+- ESLint y Prettier configurados
+- Usar tipos explícitos
+- Evitar `any`
+- Preferir interfaces sobre types para contratos
+- Usar async/await sobre callbacks
+
+### DTOs y Validación
+- Crear DTOs para requests/responses
+- Usar class-validator para validación (si está instalado)
+- Separar DTOs de entidades de dominio
+
+### Manejo de Errores
+- Usar excepciones de NestJS: `HttpException`, `NotFoundException`, etc.
+- Centralizar manejo de errores
+- Mensajes descriptivos en español
+
+### Commits y Versionado
+- Mensajes claros y descriptivos
+- Usar conventional commits si es posible
+
+## Endpoints API Principales
+
+### Franchises
+- POST /franchise - Crear franquicia
+- GET /franchise - Obtener todas las franquicias
+- GET /franchise/:id - Obtener franquicia por ID
+
+### Books
+- POST /book - Crear libro
+- GET /book/franchise/:franchiseId - Obtener libros por franquicia
+
+### Chapters
+- POST /chapter - Crear capítulo
+- GET /chapter/book/:bookId - Obtener capítulos por libro
+
+### Story Stages
+- POST /story-stage - Crear etapa de historia
+- GET /story-stage/:id - Obtener etapa por ID
+- PUT /story-stage/:id - Actualizar etapa
+- GET /story-stage/chapter/:chapter - Obtener etapas por capítulo
+
+### Decisions
+- POST /decision - Crear decisión
+- POST /decision-option - Crear opción de decisión
+- POST /decision-option/resolve/:id - Resolver opción de decisión
+
+### Player Save
+- GET /player-save/:id - Obtener guardado de jugador
+- PUT /player-save/:id - Actualizar guardado
+- POST /player-save/:id/reset - Resetear guardado
+
+### Inventory
+- POST /player/:id/inventory/add - Añadir item
+- POST /player/:id/inventory/remove - Remover item
+- POST /player/:id/inventory/use - Usar item
+
+### Canonical Events
+- POST /canonical-event - Crear evento canónico
+- POST /canonical-event/trigger/:id - Disparar evento
+
+## Notas Importantes
+- El proyecto está en desarrollo activo
+- Prioridad en mantener la arquitectura limpia y hexagonal
+- Toda la lógica de negocio debe estar en el dominio
+- Los casos de uso orquestan la lógica de aplicación
+- La infraestructura es intercambiable (principio de puertos y adaptadores)
+- Código en español e inglés mezclado (preferir inglés para nuevo código)
+
+## Recursos
+- Documentación NestJS: https://docs.nestjs.com
+- Mongoose: https://mongoosejs.com
+- Arquitectura Hexagonal: Mantener separación de capas estricta
